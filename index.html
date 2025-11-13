@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="shortcut icon" href="https://www.twghkywc.edu.hk/sites/default/files/sch_logo.png" type="image/png">
+    <title>KYWC_3D班網</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF', // 主色（深藍）
+                        secondary: '#3B82F6', // 輔色（亮藍）
+                        accent: '#EF4444', // 強調色（活力紅）
+                        neutral: '#F3F4F6', // 背景色
+                        dark: '#1F2937' // 文字色
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                    },
+                },
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.25);
+            }
+            .scale-hover {
+                transition-property: all;
+                transition-duration: 300ms;
+            }
+            .scale-hover:hover {
+                transform: scale(1.05);
+            }
+            .card-shadow {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+            }
+            .touch-friendly {
+                min-height: 48px;
+                min-width: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .section-padding {
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+            }
+            @media (min-width: 768px) {
+                .section-padding {
+                    padding-top: 6rem;
+                    padding-bottom: 6rem;
+                }
+            }
+            .section-divider {
+                width: 5rem;
+                height: 0.25rem;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans text-dark bg-white">
+    
+    <div class="content-wrapper relative z-2">
+        <!-- 导航栏 -->
+        <header id="navbar" class="sticky top-0 z-50 bg-white shadow-md transition-all duration-300">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="bg-primary text-white p-2 rounded-lg">
+                            <i class="fa fa-graduation-cap text-2xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-primary">KYWC_3D班網</h1>
+                            <p class="text-xs text-gray-500">郭一葦中學</p>
+                        </div>
+                    </div>
+                    
+                    <nav class="hidden md:flex items-center space-x-8">
+                        <a href="#home" class="font-medium hover:text-primary transition-colors">首頁</a>
+                        <a href="#announcements" class="font-medium hover:text-primary transition-colors">最新公告</a>
+                        <a href="#about" class="font-medium hover:text-primary transition-colors">關於我們</a>
+                        <a href="#links" class="font-medium hover:text-primary transition-colors">快速鏈接</a>
+                        <a href="#contact" class="font-medium hover:text-primary transition-colors">聯絡我們</a>
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> 登出</a>
+                    </nav>
+                    
+                    <div class="flex items-center space-x-4">
+                        <a href="#suggestion" class="hidden sm:flex items-center px-4 py-2 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">
+                            <i class="fa fa-pencil mr-2"></i>意見反饋
+                        </a>
+                        
+                        <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none touch-friendly">
+                            <i class="fa fa-bars text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t shadow-lg">
+                <div class="container mx-auto px-4 py-3 space-y-1">
+                    <a href="#home" class="block py-3 px-4 font-medium hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">首頁</a>
+                    <a href="#announcements" class="block py-3 px-4 font-medium hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">最新公告</a>
+                    <a href="#about" class="block py-3 px-4 font-medium hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">關於我們</a>
+                    <a href="#links" class="block py-3 px-4 font-medium hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">快速鏈接</a>
+                    <a href="#contact" class="block py-3 px-4 font-medium hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">聯絡我們</a>
+                    <a href="#" class="block py-3 px-4 font-medium hover:bg-primary/5 hover:text-primary rounded-lg transition-colors">登出</a>
+                    <a href="#suggestion" class="block py-3 px-4 font-medium text-primary hover:bg-primary/5 rounded-lg transition-colors">
+                        <i class="fa fa-pencil mr-2"></i>意見反饋
+                    </a>
+                </div>
+            </div>
+        </header>
+
+ <!-- 首頁輪播 -->
+  <section id="home" class="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden">
+    <div id="slider" class="w-full h-full">
+      <!-- 輪播項目 1 -->
+      <div class="slider-item absolute inset-0 opacity-100 transition-opacity duration-1000">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-transparent z-10"></div>
+        <img src="banner_1.png" alt="校園文化節" class="w-full h-full object-cover">
+        <div class="absolute top-0 left-0 w-full h-full z-20 flex items-center">
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-lg text-white">
+              <h2 class="text-[clamp(1.5rem,5vw,3.5rem)] font-bold leading-tight text-shadow-lg mb-4">
+                3D壁報設計
+              </h2>
+              <p class="text-[clamp(0.9rem,2vw,1.25rem)] text-shadow mb-6">
+                承夢前行創輝煌繼往開來展未來，校慶共築夢想之路。
+              </p>
+              <a href="banner_1.png" class="inline-block bg-white text-primary hover:bg-gray-100 font-medium px-6 py-3 rounded-lg transition-all scale-hover">
+                設計預覽 <i class="fa fa-arrow-right ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 輪播項目 2 -->
+      <div class="slider-item absolute inset-0 opacity-0 transition-opacity duration-1000">
+        <div class="absolute inset-0 bg-gradient-to-r from-dark/70 to-transparent z-10"></div>
+        <img src="banner_2.png" alt="按按鈕進入班級相簿,查看班級裡的精彩瞬間與回憶!!" class="w-full h-full object-cover">
+        <div class="absolute top-0 left-0 w-full h-full z-20 flex items-center">
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-lg text-white">
+              <h2 class="text-[clamp(1.5rem,5vw,3.5rem)] font-bold leading-tight text-shadow-lg mb-4">
+                班級相簿
+              </h2>
+              <p class="text-[clamp(0.9rem,2vw,1.25rem)] text-shadow mb-6">
+                班級相簿是我們共同的回憶，記錄著每一個珍貴的瞬間，讓我們一起珍惜這些美好的時光。
+              </p>
+              <a href="gallery.html" class="inline-block bg-white text-primary hover:bg-gray-100 font-medium px-6 py-3 rounded-lg transition-all scale-hover">
+                進入相簿 <i class="fa fa-file-text-o ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 輪播項目 3 -->
+      <div class="slider-item absolute inset-0 opacity-0 transition-opacity duration-1000">
+        <div class="absolute inset-0 bg-gradient-to-r from-secondary/80 to-transparent z-10"></div>
+        <img src="https://picsum.photos/id/42/1600/900" alt="學生服務中心" class="w-full h-full object-cover">
+        <div class="absolute top-0 left-0 w-full h-full z-20 flex items-center">
+          <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-lg text-white">
+              <h2 class="text-[clamp(1.5rem,5vw,3.5rem)] font-bold leading-tight text-shadow-lg mb-4">
+                學生服務中心
+              </h2>
+              <p class="text-[clamp(0.9rem,2vw,1.25rem)] text-shadow mb-6">
+                課業輔導、生活諮詢、獎助學金申請一站式服務
+              </p>
+              <a href="#services" class="inline-block bg-white text-secondary hover:bg-gray-100 font-medium px-6 py-3 rounded-lg transition-all scale-hover">
+                服務一覽 <i class="fa fa-list-ul ml-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-6 left-0 right-0 z-30 flex justify-center space-x-4">
+      <button class="slider-dot w-4 h-4 rounded-full bg-white opacity-100"></button>
+      <button class="slider-dot w-4 h-4 rounded-full bg-white opacity-50"></button>
+      <button class="slider-dot w-4 h-4 rounded-full bg-white opacity-50"></button>
+    </div>
+
+    <button id="prev-slide" class="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors touch-friendly">
+      <i class="fa fa-chevron-left"></i>
+    </button>
+    <button id="next-slide" class="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm text-white flex items-center justify-center hover:bg-white/30 transition-colors touch-friendly">
+      <i class="fa fa-chevron-right"></i>
+    </button>
+  </section>
+
+        <!-- 最新公告 -->
+        <section id="announcements" class="section-padding bg-neutral">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-center">最新公告</h2>
+                <div class="section-divider bg-primary"></div>
+                
+                <div class="bg-white rounded-xl card-shadow p-6 md:p-8 mt-10">
+                    <!-- 公告1 -->
+                    <div class="announcement-item py-4 border-b border-gray-100 hover:bg-gray-50 rounded-lg p-2 transition-colors">
+                        <h3 class="text-xl font-semibold text-primary mb-2">期末考試安排通知</h3>
+                        <div class="text-gray-500 text-sm mb-3">
+                            <i class="fa fa-calendar-o mr-2"></i> 2023-12-15 | 
+                            <i class="fa fa-user-o mr-2"></i> 班導師
+                        </div>
+                        <p class="text-gray-600">
+                            期末考試將於1月15日至1月20日舉行，請同學們提前做好準備，合理安排複習時間。具體考試時間表已上傳至班級群組。
+                        </p>
+                    </div>
+                    
+                    <!-- 公告2 -->
+                    <div class="announcement-item py-4 border-b border-gray-100 hover:bg-gray-50 rounded-lg p-2 transition-colors">
+                        <h3 class="text-xl font-semibold text-primary mb-2">聖誕聯歡活動籌備</h3>
+                        <div class="text-gray-500 text-sm mb-3">
+                            <i class="fa fa-calendar-o mr-2"></i> 2023-12-10 | 
+                            <i class="fa fa-user-o mr-2"></i> 班會幹事
+                        </div>
+                        <p class="text-gray-600">
+                            聖誕聯歡活動將於12月22日下午舉行，現開始收集節目和遊戲提案，有意參與策劃的同學請聯繫班長。
+                        </p>
+                    </div>
+                    
+                    <!-- 公告3 -->
+                    <div class="announcement-item py-4 hover:bg-gray-50 rounded-lg p-2 transition-colors">
+                        <h3 class="text-xl font-semibold text-primary mb-2">校園義工招募</h3>
+                        <div class="text-gray-500 text-sm mb-3">
+                            <i class="fa fa-calendar-o mr-2"></i> 2023-12-05 | 
+                            <i class="fa fa-user-o mr-2"></i> 服務學習組
+                        </div>
+                        <p class="text-gray-600">
+                            學校將於12月24日組織校園義工活動，協助社區老人中心舉辦聖誕派對，歡迎同學們踴躍報名參加。
+                        </p>
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <a href="#" class="inline-block border border-primary text-primary hover:bg-primary hover:text-white px-6 py-3 rounded-lg transition-colors">
+                            查看全部公告 <i class="fa fa-list-ul ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+          <!-- 關於我們 -->
+  <section id="about" class="section-padding">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">關於我們</h2>
+        <div class="section-divider bg-primary"></div>
+        <p class="max-w-2xl mx-auto text-gray-600 px-2">致力於打造一個和諧、進步的班級文化。</p>
+      </div>
+      
+      
+      <div class="mt-16">
+        <h3 class="text-2xl font-semibold text-center mb-10">現任班會幹事</h3>
+        
+        <!-- 幹部展示區域 - 改進為均勻分布的網格 -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- 成員 1 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/64/200/200" alt="會長照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">許紫妮</h4>
+            <p class="text-primary text-sm">班長</p>
+          </div>
+          
+          <!-- 成員 2 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/65/200/200" alt="副會長照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">阮文謙</h4>
+            <p class="text-primary text-sm">班長</p>
+          </div>
+          
+          <!-- 成員 3 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/91/200/200" alt="秘書長照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">曾泯豪</h4>
+            <p class="text-primary text-sm">班長</p>
+          </div>
+          
+          <!-- 成員 4 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/27/200/200" alt="美術幹事照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">梁穎珈</h4>
+            <p class="text-primary text-sm">班會主席</p>
+          </div>
+          
+          <!-- 成員 5 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/28/200/200" alt="體育幹事照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">羅卓熹</h4>
+            <p class="text-primary text-sm">班會康樂</p>
+          </div>
+          
+          <!-- 成員 6 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/29/200/200" alt="IT幹事照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">敖塇苗</h4>
+            <p class="text-primary text-sm">班會文書</p>
+          </div>
+          
+          <!-- 成員 7 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/30/200/200" alt="總務幹事照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">范琇瑜</h4>
+            <p class="text-primary text-sm">班會總務</p>
+          </div>
+        
+          <!-- 成員 8 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/32/200/200" alt="宣傳幹事照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">鍾卓軒</h4>
+            <p class="text-primary text-sm">班會財政</p>
+          </div>
+
+          <!-- 成員 9 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/33/200/200" alt="宣傳幹事照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">葉梓淇</h4>
+            <p class="text-primary text-sm">班會美術</p>
+          </div>
+          <!-- 成員 10 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/34/200/200" alt="班主任照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">吳凱翎老師</h4>
+            <p class="text-primary text-sm">班主任</p>
+          </div>
+
+          <!-- 成員 11 -->
+          <div class="text-center scale-hover">
+            <div class="relative w-36 h-36 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary">
+              <img src="https://picsum.photos/id/35/200/200" alt="副班主任照片" class="w-full h-full object-cover">
+            </div>
+            <h4 class="font-semibold text-lg">黃勁權老師</h4>
+            <p class="text-primary text-sm">班主任</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+        <!-- 快速链接 -->
+        <section id="links" class="section-padding bg-neutral">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">快速鏈接</h2>
+        <div class="section-divider bg-primary"></div>
+      </div>
+      
+      <!-- 服務項目 - 改進為平衡的網格布局 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-6">
+          <!-- 服務 1 -->
+          <div class="bg-white p-6 rounded-xl shadow-md flex flex-col sm:flex-row scale-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4 sm:mb-0 sm:mr-5 flex-shrink-0 mx-auto sm:mx-0">
+              <i class="fa fa-book text-2xl text-primary"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2 text-center sm:text-left">學習資源</h3>
+              <p class="text-gray-600 text-center sm:text-left">提供課程大綱、教材補充、作業參考等學習資源。</p>
+              <a href="resources.html" class="inline-flex items-center text-primary font-medium hover:underline mt-2 justify-center sm:justify-start">
+                學習資源 <i class="fa fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- 服務 2 -->
+          <div class="bg-white p-6 rounded-xl shadow-md flex flex-col sm:flex-row scale-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4 sm:mb-0 sm:mr-5 flex-shrink-0 mx-auto sm:mx-0">
+              <i class="fa fa-camera text-2xl text-primary"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2 text-center sm:text-left">班級相冊</h3>
+              <p class="text-gray-600 text-center sm:text-left">瀏覽班級活動相片、合照，記錄美好回憶。</p>
+              <a href="gallery.html" class="inline-flex items-center text-primary font-medium hover:underline mt-2 justify-center sm:justify-start">
+                瀏覽相簿 <i class="fa fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="space-y-6">
+          <!-- 服務 3 -->
+          <div class="bg-white p-6 rounded-xl shadow-md flex flex-col sm:flex-row scale-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4 sm:mb-0 sm:mr-5 flex-shrink-0 mx-auto sm:mx-0">
+              <i class="fa fa-users text-2xl text-primary"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2 text-center sm:text-left">班會幹事</h3>
+              <p class="text-gray-600 text-center sm:text-left">負責班級事務的學生代表，協助班主任管理班級活動。</p>
+              <a href="committee.html" class="inline-flex items-center text-primary font-medium hover:underline mt-2 justify-center sm:justify-start">
+                查看幹事名單 <i class="fa fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- 服務 4 -->
+          <div class="bg-white p-6 rounded-xl shadow-md flex flex-col sm:flex-row scale-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4 sm:mb-0 sm:mr-5 flex-shrink-0 mx-auto sm:mx-0">
+              <i class="fa fa-info-circle text-2xl text-primary"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2 text-center sm:text-left">學校資訊</h3>
+              <p class="text-gray-600 text-center sm:text-left">查看學校最新通知、活動資訊信息。</p>
+              <a href="info.html" class="inline-flex items-center text-primary font-medium hover:underline mt-2 justify-center sm:justify-start">
+                學校資訊 <i class="fa fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 意見反饋 -->
+  <section id="suggestion" class="section-padding bg-primary text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">意見反饋</h2>
+        <div class="section-divider bg-white"></div>
+        <p class="px-2">需要以學校電郵作登入填寫 Google Form</p>
+      </div>
+      
+      <div class="max-w-2xl mx-auto">
+        <iframe 
+          src="https://docs.google.com/forms/d/e/1FAIpQLScCn65H7ElslVx7CujmsM_kkHmntS4tvqHFccb4mwbY-ey8cA/viewform?usp=dialog"
+          class="w-full min-h-[600px] bg-white rounded-lg shadow-lg"
+          frameborder="0" 
+          marginheight="0" 
+          marginwidth="0">
+          載入中...
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+        <!-- 联系我们 -->
+        <section id="contact" class="section-padding">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-center">聯絡我們</h2>
+                <div class="section-divider bg-primary"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10">
+                    <div>
+                        <div class="bg-white rounded-xl card-shadow p-6 md:p-8 h-full">
+                            <h3 class="text-2xl font-bold text-primary mb-6">聯絡信息</h3>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                                        <i class="fa fa-map-marker text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-1">學校地址</h4>
+                                        <p class="text-gray-600">香港九龍灣宏照道38號</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                                        <i class="fa fa-phone text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-1">聯絡電話</h4>
+                                        <p class="text-gray-600">2345-6789</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                                        <i class="fa fa-envelope-o text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-1">電子郵箱</h4>
+                                        <p class="text-gray-600">3d@kywc.edu.hk</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                                        <i class="fa fa-clock-o text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold mb-1">上課時間</h4>
+                                        <p class="text-gray-600">星期一至五: 08:00 - 16:30</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <h4 class="font-semibold mb-4">關注我們</h4>
+                                <div class="flex space-x-4">
+                                    <a href="#" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-secondary transition-colors">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-secondary transition-colors">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-secondary transition-colors">
+                                        <i class="fa fa-wechat"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-white rounded-xl card-shadow p-6 md:p-8">
+                            <h3 class="text-2xl font-bold text-primary mb-6">意見反饋</h3>
+                            
+                            <form>
+                                <div class="mb-4">
+                                    <label for="name" class="block text-gray-700 mb-2">姓名</label>
+                                    <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="請輸入您的姓名">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="email" class="block text-gray-700 mb-2">電子郵箱</label>
+                                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="請輸入您的郵箱">
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="message" class="block text-gray-700 mb-2">留言內容</label>
+                                    <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="請輸入您的留言"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-colors">
+                                    提交留言 <i class="fa fa-paper-plane ml-2"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="bg-dark text-white py-10">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <div class="bg-white text-primary p-2 rounded-lg">
+                                <i class="fa fa-graduation-cap text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">KYWC_3D班網</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm">
+                            團結互助，共創輝煌，我們的班級故事從這裡開始。
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">快速鏈接</h4>
+                        <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-white hover:text-white transition-colors">首頁</a></li>
+                        <li><a href="#announcements" class="hover:text-white hover:text-white transition-colors">最新公告</a></li>
+                        <li><a href="#about" class="hover:text-white hover:text-white transition-colors">關於我們</a></li>
+                        <li><a href="#links" class="hover:text-white hover:text-white transition-colors">快速鏈接</a></li>
+                        <li><a href="#contact" class="hover:text-white hover:text-white transition-colors">聯絡我們</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">相關資源</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li><a href="resources.html" class="hover:text-white transition-colors">學習資源</a></li>
+                            <li><a href="gallery.html" class="hover:text-white transition-colors">班級相冊</a></li>
+                            <li><a href="committee.html" class="hover:text-white transition-colors">班會幹事</a></li>
+                            <li><a href="info.html" class="hover:text-white transition-colors">學校資訊</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">聯繫admin</h4>
+                        <ul class="space-y-2 text-gray-400">
+                            <li class="flex items-center">
+                                <i class="fa fa-envelope-o mr-2"></i>
+                                <span class="text-gray-400">admin@kywc3d.qzz.io</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-instagram mr-2"></i>
+                                <a href="https://www.instagram.com/kywc_3d/" class="hover:text-white transition-colors">kywc_3d</a>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-whatsapp mr-2 text-green-400"></i>
+                                <a href="https://wa.me/85292683237" aria-label="WhatsApp" class="hover:text-white transition-colors">852 9268 3237</a>
+                            </li>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-500 text-sm">
+                    <p>&copy; 2025 KYWC_3D班網. 保留所有權利。</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 移动菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动菜单
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+              // 輪播功能 - 適應手機端滑動
+    const sliderItems = document.querySelectorAll('.slider-item');
+    const sliderDots = document.querySelectorAll('.slider-dot');
+    const prevSlide = document.getElementById('prev-slide');
+    const nextSlide = document.getElementById('next-slide');
+    let currentSlide = 0;
+    let slideInterval;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    // 滑動檢測函數
+    function handleSwipe() {
+      if (touchEndX - touchStartX > 50) {
+        // 向右滑動，顯示上一張
+        prevSlideFunc();
+      }
+      if (touchStartX - touchEndX > 50) {
+        // 向左滑動，顯示下一張
+        nextSlideFunc();
+      }
+    }
+    
+    // 添加滑動事件監聽
+    const slider = document.getElementById('slider');
+    slider.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    
+    slider.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+      // 重置計時器
+      clearInterval(slideInterval);
+      startSlideInterval();
+    }, false);
+    
+    function showSlide(index) {
+      // 隱藏所有幻燈片
+      sliderItems.forEach(item => {
+        item.classList.add('opacity-0');
+        item.classList.remove('opacity-100');
+      });
+      
+      // 重置所有指示點
+      sliderDots.forEach(dot => {
+        dot.classList.remove('opacity-100');
+        dot.classList.add('opacity-50');
+      });
+      
+      // 顯示當前幻燈片和激活指示點
+      sliderItems[index].classList.remove('opacity-0');
+      sliderItems[index].classList.add('opacity-100');
+      sliderDots[index].classList.remove('opacity-50');
+      sliderDots[index].classList.add('opacity-100');
+      
+      currentSlide = index;
+    }
+    
+    function nextSlideFunc() {
+      let newIndex = currentSlide + 1;
+      if (newIndex >= sliderItems.length) {
+        newIndex = 0;
+      }
+      showSlide(newIndex);
+    }
+    
+    function prevSlideFunc() {
+      let newIndex = currentSlide - 1;
+      if (newIndex < 0) {
+        newIndex = sliderItems.length - 1;
+      }
+      showSlide(newIndex);
+    }
+    
+    // 設置輪播定時器
+    function startSlideInterval() {
+      slideInterval = setInterval(nextSlideFunc, 5000);
+    }
+    
+    // 初始化輪播
+    startSlideInterval();
+    
+    // 點擊指示點切換幻燈片
+    sliderDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        clearInterval(slideInterval);
+        showSlide(index);
+        startSlideInterval();
+      });
+      
+      // 支持觸摸事件
+      dot.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        this.click();
+      });
+    });
+    
+    // 點擊前後按鈕
+    prevSlide.addEventListener('click', () => {
+      clearInterval(slideInterval);
+      prevSlideFunc();
+      startSlideInterval();
+    });
+    
+    nextSlide.addEventListener('click', () => {
+      clearInterval(slideInterval);
+      nextSlideFunc();
+      startSlideInterval();
+    });
+    
+    // 支持觸摸事件
+    prevSlide.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      this.click();
+    });
+    
+    nextSlide.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      this.click();
+    });
+    
+    // 活動過濾器
+    const activityFilters = document.querySelectorAll('.activity-filter');
+    
+    activityFilters.forEach(filter => {
+      filter.addEventListener('click', function() {
+        // 移除所有過濾器的活躍狀態
+        activityFilters.forEach(f => {
+          f.classList.remove('bg-primary', 'text-white');
+          f.classList.add('bg-gray-200', 'hover:bg-gray-300');
+        });
+        
+        // 設置當前過濾器為活躍狀態
+        this.classList.remove('bg-gray-200', 'hover:bg-gray-300');
+        this.classList.add('bg-primary', 'text-white');
+      });
+      
+      // 支持觸摸事件
+      filter.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        this.click();
+        ndow.innerWidth >= 640;
+      });
+    });
+
+    // 登出按鈕功能
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if(confirm('確定要登出嗎？')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userRole');
+                window.location.href = 'login.html';
+            }
+        });
+      
+        (function() {
+          const mobileLinks = Array.from(document.querySelectorAll('#mobile-menu a'));
+          const mobileLogout = mobileLinks.find(a => {
+            const txt = (a.textContent || '').trim();
+            return txt === '登出' || txt.includes('登出');
+          });
+
+          if (!mobileLogout) return;
+
+          function handleMobileLogout(e) {
+            e.preventDefault();
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+              mobileMenu.classList.add('hidden');
+            }
+
+            if (confirm('確定要登出嗎？')) {
+              localStorage.removeItem('authToken');
+              localStorage.removeItem('isLoggedIn');
+              localStorage.removeItem('userRole');
+              setTimeout(() => window.location.href = 'login.html', 120);
+            }
+          }
+
+          mobileLogout.addEventListener('click', handleMobileLogout);
+          mobileLogout.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            handleMobileLogout(e);
+          }, {passive: false});
+          mobileLogout.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleMobileLogout(e);
+            }
+          });
+        })();
+    
+
+    // 權限檢查
+    document.addEventListener('DOMContentLoaded', function() {
+      // 檢查登入狀態
+      function checkAuth() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const authToken = localStorage.getItem('authToken');
+        
+        if (!isLoggedIn || !authToken) {
+          window.location.href = 'login.html';
+          return false;
+        }
+        
+        try {
+          // 驗證token是否有效
+          const tokenData = JSON.parse(atob(authToken));
+          const currentTime = Date.now();
+          const tokenAge = currentTime - tokenData.timestamp;
+          
+          // Token有效期24小時
+          if (tokenAge > 24 * 60 * 60 * 1000) {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('isLoggedIn'); 
+            localStorage.removeItem('userRole');
+            window.location.href = 'login.html';
+            return false;
+          }
+          
+          return true;
+        } catch (error) {
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('userRole');
+          window.location.href = 'login.html';
+          return false;
+        }
+      }
+
+      // 頁面載入時檢查權限
+      if (!checkAuth()) {
+        // 如果未登入，會自動跳轉到登入頁面 
+      }
+    });
+    </script>
+</body>
+</html>
